@@ -50,8 +50,20 @@ public class Author {
         }
         return highestRatedBook;
         */
+        Book highestRatedBook = null;
+        Double highestRating = -1.0;
+        for (Book book : books) {
+            Optional <Double> rating = book.getWeightedRating();
+            if (rating.isPresent() && rating.get() > highestRating) {// If the Optional is
+                // present, get its value. If not, return the default value.;
+                highestRating = rating.get()  // If the Optional is present, get its value.
+                // If not, return the default value.;
+                highestRatedBook = book;
+            }
+        }
 
         // PARTICIPANTS: Write a safer, more readable implementation using Optional.
-        return Optional.empty();
+        return Optional.ofNullable(highestRatedBook);// Using Optional.ofNullable to safely
+        // handle null return values.
     }
 }

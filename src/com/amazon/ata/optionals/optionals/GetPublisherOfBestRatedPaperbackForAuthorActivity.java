@@ -43,8 +43,19 @@ public class GetPublisherOfBestRatedPaperbackForAuthorActivity {
             }
         }
         */
+/*        if (authorName == null){
+            return Optional.empty();
+        }*/
 
-        return Optional.empty();
+        return authorDao.findAuthorByName(authorName)//Lo que significa este return
+                // es que si el nombre del autor es null, devuelve una Optional vacía. Si el nombre del autor no es null,
+                // sigue buscando un autor en la base de datos, busca el libro con mejores calificaciones,
+                // busca el libro que es un papel impreso, y luego devuelve el editorial del libro.
+                // Si todos estos pasos son exitosos, devuelve la Optional con el editorial del libro.
+                // Si alguno de los pasos falla, devuelve la Optional vacía  */
+                .flatMap(Author::getBestRatedBook)
+                .flatMap(Book::getPperback)
+                .flatMap(Printing::getPublisher);
     }
 
 }

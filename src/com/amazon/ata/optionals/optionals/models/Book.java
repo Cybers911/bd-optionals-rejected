@@ -75,9 +75,15 @@ public class Book {
             return statistics.getAverage();
         }
         */
+        if (statistics.getCount() == 0) {
+            return Optional.empty();// If no ratings, return an empty Optional
+        } else {
+            return Optional.ofNullable(statistics.getAverage());// Return the average rating
+            // as an Optional
+        }
 
         // PARTICIPANTS: Make this safer with Optional.
-        return Optional.empty();
+
     }
 
     /**
@@ -98,8 +104,18 @@ public class Book {
         }
         return latestPaperback;
         */
+        Printing latestPaperback = null;
+        for (Printing printing : printings) {
+            if (printing.getPrintingType() == PrintingType.PAPERBACK) {
+                if (latestPaperback == null
+                        || latestPaperback.getPrintDate().before(printing.getPrintDate())) {
+                    latestPaperback = printing;
+                }
+            }
+        }
+        return Optional.ofNullable(latestPaperback);
 
         // PARTICIPANTS: Make this safer with Optional.
-        return Optional.empty();
+
     }
 }
